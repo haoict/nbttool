@@ -1,23 +1,27 @@
 package com.haoict.nbttool;
 
-import com.haoict.nbttool.client.ClientProxy;
 import com.haoict.nbttool.client.TooltipInjector;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Config.MOD_ID)
+@Mod(Constants.MOD_ID)
 public class NBTTool {
-  private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
-  public NBTTool() {
-    MinecraftForge.EVENT_BUS.register(this);
+    public NBTTool() {
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-    DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-    MinecraftForge.EVENT_BUS.register(CommandEventRegistryHandler.class);
-  }
+        MinecraftForge.EVENT_BUS.register(this);
+
+        bus.addListener(this::clientSetup);
+    }
+
+    private void clientSetup(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(TooltipInjector.class);
+    }
 }
