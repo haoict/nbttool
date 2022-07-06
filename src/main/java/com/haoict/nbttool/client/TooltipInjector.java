@@ -7,7 +7,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,10 +28,10 @@ public class TooltipInjector {
                 } else {
                     tooltipComponent = NbtUtils.toPrettyComponent(nbtTag);
                     event.getToolTip().add(tooltipComponent);
-                    event.getToolTip().add(new TextComponent("Hold Ctrl to see formatted text").setStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.GRAY)));
+                    event.getToolTip().add(Component.translatable("Hold Ctrl to see formatted text").setStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.GRAY)));
                 }
             } else {
-                event.getToolTip().add(new TextComponent("Turn on advanced tooltips (F3+H) too see NBT Tags").setStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.GRAY)));
+                event.getToolTip().add(Component.translatable("Turn on advanced tooltips (F3+H) too see NBT Tags").setStyle(Style.EMPTY.withItalic(true).applyFormat(ChatFormatting.GRAY)));
             }
         }
     }
